@@ -19,3 +19,14 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+def mainClassName = "org.example.Main"
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
